@@ -1,13 +1,14 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const { createStore, applyMiddleware } = require('redux');
-const { Provider, connect } = require('react-redux');
-const createLogger = require('redux-logger');
-const ReduxThunk = require('redux-thunk').default;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import createLogger from 'redux-logger';
+import ReduxThunk from 'redux-thunk';
 
-const firebase = require('./firebase.js');
-const { auth } = require('./auth/reducer.js');
-const { App } = require('./views/components/header.js');
+import firebase from './firebase.js';
+import { auth } from './auth/reducer.js';
+import { App } from './views/components/header.js';
+import { initAuth } from './auth/actions.js';
 
 
 
@@ -28,3 +29,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+store.dispatch(initAuth());

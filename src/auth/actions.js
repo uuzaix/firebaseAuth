@@ -1,33 +1,45 @@
-const React = require('react');
-const firebase = require('firebase');
+import React from 'react';
+import firebase from 'firebase';
 
-const {firebaseApp, firebaseAuth } = require('../firebase.js');
+import { firebaseApp, firebaseAuth } from '../firebase.js';
 
 
-function loginSuccess(result) {
+const loginSuccess = (user) => {
   return {
     type: 'LOGIN_SUCCESS',
-    payload: result.user
+    payload: user
   };
 }
 
-export function loginWithGitHub() {
+export const loginWithGitHub = () => {
   const provider = new firebase.auth.GithubAuthProvider();
   return dispatch => {
     firebaseAuth.signInWithPopup(provider)
-      .then(result => dispatch(loginSuccess(result)))
+      .then(result => dispatch(loginSuccess(result.user)))
   };
 }
 
-function logOutSuccess() {
+const logOutSuccess = () => {
   return {
     type: 'LOGOUT_SUCCESS'
   };
 }
 
-export function logOut() {
+export const logOut = () => {
   return dispatch => {
     firebaseAuth.signOut()
       .then(() => dispatch(logOutSuccess()));
+  };
+}
+
+export const initAuth = () => {
+  return dispatch => {
+    const unsub = firebaseAuth.onAuthStateChanged(
+      user => {
+        if (!!user) {
+          dispatch(loginSuccess(user));
+          unsub();
+        }
+      });
   };
 }
