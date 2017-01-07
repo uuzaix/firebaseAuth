@@ -9,9 +9,6 @@ export const LoginWithProvider = ({loginWithGitHub}) => {
 
 export const LogOut = ({logOut}) => {
   return (
-    <div>
-      <button onClick={logOut}>Logout</button>
-      <p>Game</p>
-    </div>
+    <button onClick={logOut}>Logout</button>
   )
 };

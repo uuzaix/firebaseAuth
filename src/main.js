@@ -7,13 +7,13 @@ import ReduxThunk from 'redux-thunk';
 
 import firebase from './firebase.js';
 import { auth } from './auth/reducer.js';
-import { App } from './views/components/header.js';
+import { App } from './views/app.js';
 import { initAuth } from './auth/actions.js';
 
 
 
 const store = createStore(
-  auth,
+  combineReducers({ auth }),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(
     ReduxThunk,
